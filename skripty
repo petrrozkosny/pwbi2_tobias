@@ -236,3 +236,35 @@ IF(
     <='topn'[Hodnota parametru topn],
     -- barva vracena v pripade splneni podminky
     "CYAN")
+
+________________________________________________________
+
+24 topn lokalit = 
+VAR _tabulka = 
+ADDCOLUMNS(
+    ALL(dim_lokality[Lokalita]),
+"suma srazek",
+CALCULATE(SUM(data[Srazky])))
+VAR _tabulka_rank = 
+ADDCOLUMNS(
+    _tabulka,
+"rank",
+RANKX(_tabulka,[suma srazek],,DESC,Dense))
+VAR _tabulka_rank_typ_lokality =
+ADDCOLUMNS(
+    _tabulka_rank,
+"typ lokality",
+if([rank] <=3,dim_lokality[Lokalita],"OSTATNI"))
+
+RETURN 
+IF(
+    SELECTEDVALUE('dim typy_lokalit'[Lokalita]) = "OSTATNI",
+    SUMX(
+        FILTER(_tabulka_rank_typ_lokality,
+        [typ lokality] = "OSTATNI"),
+    [suma srazek]),
+
+    SUMX(
+        FILTER(_tabulka_rank_typ_lokality,
+        [typ lokality] = SELECTEDVALUE('dim typy_lokalit'[Lokalita])),
+    [suma srazek]))
