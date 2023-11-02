@@ -198,17 +198,41 @@ ________________________________________________________________________________
 ________________________________________________________________________________________
 
 23 pf topn hodnot = 
+
+/*
+Ucelem je podmine formatovat TOPN mesicu v danem roce, pricemz N dosazuje uzivatel pres vyber
+na prurezu.
+*/
+-- tabulka se sloupci mesic, suma srazek
 VAR _tabulka = 
 ADDCOLUMNS(
+    -- tabulka se vsemi mesici v danem roce
     ALL(dim_datumy[mesic]),
+-- nazev nove pridavaneho sloupce
 "suma srazek",
+-- hodnota nove pridavaneho sloupce, tj. suma srazek pro dany mesic (mame all(mesic))
+-- a rok, protoze filtru nad rokem jsme se nezbavili
 CALCULATE(SUM(data[Srazky])))
+
+-- tabulka se sloupci mesic, suma srazek, rank
 VAR _tabulka_rank = 
+-- tabulku vracenou funkci addcolumns() filtrujeme na mesic vizualu, zajima nas,
+-- rank daneho mesice v roce
 FILTER(
+-- do tabulky z promenne _tabulka pridavame sloupecek rank
 ADDCOLUMNS(
     _tabulka,
 "rank",
+-- pocitame rank pro hodnoty ze sloupce [suma srazek]
 RANKX(_tabulka,[suma srazek],,DESC,Dense)),
 dim_datumy[mesic] = SELECTEDVALUE(dim_datumy[mesic]))
+
 RETURN
-IF(MAXX(_tabulka_rank,[rank])<='topn'[Hodnota parametru topn],"CYAN")
+IF(
+    -- pocitame rank mesice jako skalarni hodnotu, mohli bychom pouzit
+    -- maxx,minx,averagex apod.
+    MAXX(_tabulka_rank,[rank])
+    -- mira vracejici uzivatelem vybranou hodnotu
+    <='topn'[Hodnota parametru topn],
+    -- barva vracena v pripade splneni podminky
+    "CYAN")
