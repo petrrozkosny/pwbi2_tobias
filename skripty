@@ -112,3 +112,16 @@ SUM(data[srazky])
 CALCULATE(
     SUM(data[Srazky]),
     dim_datumy[rok] = MAX(dim_datumy[rok])-1)
+
+______________________________________________________________________________
+
+10 nazev tabulky = 
+
+SWITCH(TRUE(),
+    HASONEFILTER(dim_lokality[Lokalita]),
+"Vývoj maximální teploty v lokalitě "&SELECTEDVALUE(dim_lokality[Lokalita]),
+    ISFILTERED(dim_lokality[Lokalita]),
+"Vývoj maximální teploty v lokalitách "&
+    CONCATENATEX(dim_lokality,dim_lokality[Lokalita],", "),
+"Vývoj maximální teploty napříč lokalitami"
+)
