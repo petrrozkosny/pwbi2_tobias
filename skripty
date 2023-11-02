@@ -92,3 +92,16 @@ ____________________________________________________
 CALCULATE(
     COUNT(data[Datum]),
 data[Teplota] >=30)
+
+_______________________________________________________________________
+
+
+09 suma srazek mezirocne = 
+
+-- suma srazek v dane lokalite, roce
+SUM(data[srazky])
+    -
+-- suma srazek v dane lokalite, predchozi rok
+CALCULATE(
+    SUM(data[Srazky]),
+    dim_datumy[rok] = MAX(dim_datumy[rok])-1)
