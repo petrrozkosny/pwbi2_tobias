@@ -152,3 +152,11 @@ ________________________________________________________________________________
 CALCULATE(
     COUNT(data[Datum]),
 data[Teplota] = MAX(data[Teplota]))
+
+____________________________________________________________________________
+
+14 posledni vyskyt max teplota = 
+-- v dane lokalite = 
+CALCULATE(
+    max(data[Datum]),
+data[Teplota] = MAX(data[Teplota]))
