@@ -125,3 +125,18 @@ SWITCH(TRUE(),
     CONCATENATEX(dim_lokality,dim_lokality[Lokalita],", "),
 "Vývoj maximální teploty napříč lokalitami"
 )
+_________________________________________________________________________________
+
+11 pf maximalni teplota = 
+
+-- maximalni teplota v danem mesici, roce, lokalite
+VAR max_teplota = MAX(data[Teplota])
+
+-- maximalni teplota v danem mesici, lokalite, tj. bez ohledu na rok
+VAR max_teplota_mesic = 
+    CALCULATE(
+        MAX(data[Teplota]),
+        ALL(dim_datumy[rok]))
+
+RETURN
+IF(max_teplota = max_teplota_mesic,"GOLD")
