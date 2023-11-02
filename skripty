@@ -241,29 +241,42 @@ ________________________________________________________
 
 24 topn lokalit = 
 VAR _tabulka = 
+-- tabulka se sloupci lokalita, suma srazek
 ADDCOLUMNS(
+    -- tabulka se vsemi lokalitami
     ALL(dim_lokality[Lokalita]),
 "suma srazek",
+-- suma srazek pro danou lokalitu ve vybranem roce (do tabulky data nam propada filtr z prurezu)
 CALCULATE(SUM(data[Srazky])))
+
+-- tabulka se sloupci lokalita, suma srazek, rank
 VAR _tabulka_rank = 
 ADDCOLUMNS(
     _tabulka,
 "rank",
+-- pridavame novy sloupec pocitajici rank sumy srazek v dane lokalite v danem roce
 RANKX(_tabulka,[suma srazek],,DESC,Dense))
+-- tabulka se sloupci lokalita, suma srazek, rank, typ lokality
 VAR _tabulka_rank_typ_lokality =
 ADDCOLUMNS(
     _tabulka_rank,
 "typ lokality",
+-- pokud je rank srazek <=3, tak vracime nazev lokality, jinak hodnotu OSTATNI
+-- timto odlisujeme TOP3 a zbytek
 if([rank] <=3,dim_lokality[Lokalita],"OSTATNI"))
-
 RETURN 
 IF(
+    -- pokud je vybranou lokalitou na vizualu "OSTATNI",
+    -- pocitame z tabulky v promenne _tabulka_rank_typ_lokality
+    -- sumu srazek za lokality OSTATNI
     SELECTEDVALUE('dim typy_lokalit'[Lokalita]) = "OSTATNI",
     SUMX(
         FILTER(_tabulka_rank_typ_lokality,
         [typ lokality] = "OSTATNI"),
     [suma srazek]),
-
+    -- pokud neni vybranou lokalitou na vizualu OSTATNI,
+    -- pocitame sumu srazek z tabulky _tabulka_rank_typ_lokality pro vybranou lokalitu,
+    -- napr. MOSNOV, PIDING apod.
     SUMX(
         FILTER(_tabulka_rank_typ_lokality,
         [typ lokality] = SELECTEDVALUE('dim typy_lokalit'[Lokalita])),
