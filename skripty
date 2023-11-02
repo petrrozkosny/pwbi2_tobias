@@ -176,3 +176,21 @@ SUM(data[Srazky]),
 CALCULATE(SUM(data[Srazky])),
 "suma srazek mesic 7 calculate",
 CALCULATE(SUM(data[Srazky]),dim_datumy[mesic] = 7))
+
+___________________________________________________________________________________________
+
+21 pf max a min maximalni teplota = 
+
+ VAR _tabulka = 
+ ADDCOLUMNS(
+ ALL(dim_datumy[rok]),
+ "maximalni teplota",
+ CALCULATE(MAX(data[Teplota])))
+
+ VAR _min_teplota  = MINX(_tabulka,[maximalni teplota])
+ VAR _max_teplota = MAXX(_tabulka,[maximalni teplota])
+
+ RETURN
+ SWITCH(TRUE(),
+ MAX(data[Teplota]) = _min_teplota, "CYAN",
+ MAX(data[Teplota]) = _max_teplota, "TOMATO")
