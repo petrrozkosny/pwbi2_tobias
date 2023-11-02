@@ -1,0 +1,16 @@
+dim_datumy = 
+
+-- rok,mesic den,tyden,kvartal,vikend
+ADDCOLUMNS(
+    SELECTCOLUMNS(
+        -- funkce vraci sloupecek [Date]
+        CALENDARAUTO(),
+    -- nazev sloupce vraceneho funkci SELECTCOLUMNS()
+    "datum"
+    -- hodnota sloupce vraceneho funkci SELECTCOLUMNS()
+    ,[Date])
+,"rok",YEAR([datum])
+,"kvartal",QUARTER([datum])
+,"mesic",MONTH([datum])
+,"tyden",WEEKNUM([datum],21)
+,"den",DAY([datum]))
