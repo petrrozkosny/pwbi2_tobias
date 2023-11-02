@@ -38,3 +38,10 @@ CALCULATE(
         ALL(dim_lokality[Zeme]),
     dim_lokality[Zeme] = "Cesko"))
 return verze3
+___________________________________________
+
+02 suma srazek cesko mesic 7 = 
+CALCULATE(
+    SUM(data[Srazky]),
+dim_lokality[Zeme] = "Cesko",
+dim_datumy[mesic] = 7)
