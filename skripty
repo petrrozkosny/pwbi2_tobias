@@ -94,7 +94,14 @@ CALCULATE(
 data[Teplota] >=30)
 
 _______________________________________________________________________
+08 maxilani teplota o prazdninach = 
 
+-- tj. v dane lokalite, roce, mesicich 7 a 8
+
+CALCULATE(
+    MAX(data[Teplota]),
+dim_datumy[mesic] IN {7,8})
+_________________________________________________________________________
 
 09 suma srazek mezirocne = 
 
