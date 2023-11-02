@@ -14,3 +14,27 @@ ADDCOLUMNS(
 ,"mesic",MONTH([datum])
 ,"tyden",WEEKNUM([datum],21)
 ,"den",DAY([datum]))
+
+__________________________________
+
+01 suma srazek cesko = 
+VAR verze1 = 
+-- TAKHLE NE
+CALCULATE(
+    SUM(data[Srazky]),
+FILTER(dim_lokality,dim_lokality[Zeme] = "Cesko")
+)
+-- TAKTO ANO, tzv. booleanovsky zapis
+VAR verze2 =
+CALCULATE(
+    SUM(data[Srazky]),
+    dim_lokality[Zeme] = "Cesko")
+
+-- TAKTO ANO, pokud nefunguje verze2
+VAR verze3 =
+CALCULATE(
+    SUM(data[Srazky]),
+    FILTER(
+        ALL(dim_lokality[Zeme]),
+    dim_lokality[Zeme] = "Cesko"))
+return verze3
