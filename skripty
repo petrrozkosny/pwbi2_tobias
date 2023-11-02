@@ -194,3 +194,21 @@ ________________________________________________________________________________
  SWITCH(TRUE(),
  MAX(data[Teplota]) = _min_teplota, "CYAN",
  MAX(data[Teplota]) = _max_teplota, "TOMATO")
+
+________________________________________________________________________________________
+
+23 pf topn hodnot = 
+VAR _tabulka = 
+ADDCOLUMNS(
+    ALL(dim_datumy[mesic]),
+"suma srazek",
+CALCULATE(SUM(data[Srazky])))
+VAR _tabulka_rank = 
+FILTER(
+ADDCOLUMNS(
+    _tabulka,
+"rank",
+RANKX(_tabulka,[suma srazek],,DESC,Dense)),
+dim_datumy[mesic] = SELECTEDVALUE(dim_datumy[mesic]))
+RETURN
+IF(MAXX(_tabulka_rank,[rank])<='topn'[Hodnota parametru topn],"CYAN")
