@@ -164,3 +164,15 @@ _____________________________________________________________________________
 
 15 text karty = 
 "Maximální teplota "&[12 maximalni teplota lokalita] &" naměřena "&[13 pocet vyskytu max teplota] &" (naposledy "&[14 posledni vyskyt max teplota]&")"
+
+_______________________________________________________________________________
+
+agregovana tabulka = 
+ADDCOLUMNS(
+ALL(dim_datumy[rok]),
+"suma srazek",
+SUM(data[Srazky]),
+"suma srazek calculate",
+CALCULATE(SUM(data[Srazky])),
+"suma srazek mesic 7 calculate",
+CALCULATE(SUM(data[Srazky]),dim_datumy[mesic] = 7))
