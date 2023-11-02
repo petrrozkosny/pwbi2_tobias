@@ -71,3 +71,24 @@ CALCULATE(
     MAX(data[Datum]),
     data[Srazky] = MAX(data[Srazky])
 )
+____________________________________________
+
+06 nejteplejsi rok = 
+
+VAR max_teplota_rok_lokalita = MAX(data[Teplota])
+-- bez ohledu na rok
+VAR max_teplota_lokalita = CALCULATE(MAX(data[Teplota]),ALL(dim_datumy[rok]))
+
+RETURN IF(max_teplota_lokalita = max_teplota_rok_lokalita,"ANO","NE")
+
+____________________________________________________
+
+
+07 poce tropickych dnu = 
+
+-- pocet datumu, kdy teplota >=30
+-- v dane lokalite, roce
+
+CALCULATE(
+    COUNT(data[Datum]),
+data[Teplota] >=30)
