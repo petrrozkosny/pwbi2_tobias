@@ -140,3 +140,15 @@ VAR max_teplota_mesic =
 
 RETURN
 IF(max_teplota = max_teplota_mesic,"GOLD")
+
+______________________________________________________________________________________
+
+12 maximalni teplota lokalita = 
+MAX(data[Teplota])
+
+__________________________________________________________________________________
+13 pocet vyskytu max teplota = 
+-- v dane lokalite = 
+CALCULATE(
+    COUNT(data[Datum]),
+data[Teplota] = MAX(data[Teplota]))
