@@ -160,3 +160,7 @@ ____________________________________________________________________________
 CALCULATE(
     max(data[Datum]),
 data[Teplota] = MAX(data[Teplota]))
+_____________________________________________________________________________
+
+15 text karty = 
+"Maximální teplota "&[12 maximalni teplota lokalita] &" naměřena "&[13 pocet vyskytu max teplota] &" (naposledy "&[14 posledni vyskyt max teplota]&")"
