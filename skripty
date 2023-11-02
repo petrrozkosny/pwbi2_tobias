@@ -45,7 +45,24 @@ CALCULATE(
     SUM(data[Srazky]),
 dim_lokality[Zeme] = "Cesko",
 dim_datumy[mesic] = 7)
+________________________________________
 
+03 suma srazek cele obdobi = 
+
+CALCULATE(
+    SUM(data[Srazky]),
+    -- Funkce ALL(), pokud je argumentem sloupec ci sloupce, tak rusi
+    -- pouze filtry nad danymi sloupci, tj. ne tzv. crossfiltry
+    ALL(dim_datumy[rok]))
+
+______________________________________________
+
+04 suma srazek cesko predchozi rok = 
+
+CALCULATE(
+    SUM(data[Srazky]),
+    dim_lokality[Zeme] = "Cesko",
+    dim_datumy[rok] = MAX(dim_datumy[rok]) - 1)
 _________________________________________
 
 05 posledni datum maximalnich srazek = 
