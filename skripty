@@ -45,3 +45,12 @@ CALCULATE(
     SUM(data[Srazky]),
 dim_lokality[Zeme] = "Cesko",
 dim_datumy[mesic] = 7)
+
+_________________________________________
+
+05 posledni datum maximalnich srazek = 
+-- v dane lokalite, roce
+CALCULATE(
+    MAX(data[Datum]),
+    data[Srazky] = MAX(data[Srazky])
+)
