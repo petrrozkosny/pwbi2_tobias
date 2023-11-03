@@ -288,3 +288,11 @@ __________________________________
 CALCULATE(
     SUM(data[Srazky]),
 dim_datumy[rok] = SELECTEDVALUE(dim_datumy[rok]) - 1)
+
+________________________________________________
+
+29 pf rok max srak = 
+IF(
+MAXX(
+    ALL(dim_datumy[rok]),
+CALCULATE(SUM(data[Srazky]))) = SUM(data[Srazky]),"CYAN")
