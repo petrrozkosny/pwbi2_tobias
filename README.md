@@ -1,3 +1,5 @@
+petr.rozkosny@ictpro.cz / 731 162 655
+
 # Pokročilá analýza dat za pomoci jazyka DAX
 Ukázkový report: [PWBI2 ukázkový report](https://app.powerbi.com/view?r=eyJrIjoiZDhjN2M2OGMtNTU5Mi00ZmNhLWE0ODEtNTMxZTkzODExZjhlIiwidCI6IjU4NzNhNWVlLTkzNTYtNGYyMy04YzMyLTQ5ODRmYjE5ZmZmMyIsImMiOjh9)
 
