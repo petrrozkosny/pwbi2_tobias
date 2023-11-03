@@ -9,3 +9,22 @@ ADDCOLUMNS(
 "den", DAY([datum]),
 "den_tydne",WEEKDAY([datum],2),
 "cislo_tydne",WEEKNUM([datum],21))
+
+_____________________________________
+
+08 podminene formatovani rank srazek = 
+VAR _tabulka = 
+ADDCOLUMNS(
+    ALL(data[mesic]),
+"suma srazek",
+CALCULATE(SUM(data[Srazky])))
+VAR _tabulka_rank = 
+ADDCOLUMNS(
+    _tabulka,
+"rank",
+RANKX(_tabulka,[suma srazek],,ASC))
+RETURN
+MAXX(
+    FILTER(_tabulka_rank,
+    data[mesic] = SELECTEDVALUE(data[mesic])),
+[rank])
