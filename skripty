@@ -296,3 +296,19 @@ IF(
 MAXX(
     ALL(dim_datumy[rok]),
 CALCULATE(SUM(data[Srazky]))) = SUM(data[Srazky]),"CYAN")
+
+___________________________________________________
+
+30 kumulativni suma srazek = 
+VAR max_datum = 
+EOMONTH(
+CALCULATE(MAX(data[Datum]),ALL(dim_datumy)),0)
+RETURN
+IF(
+ 
+    MAX(dim_datumy[datum]) > max_datum,BLANK(),
+CALCULATE(
+    SUM(data[Srazky]),
+dim_datumy[mesic] <= SELECTEDVALUE(dim_datumy[mesic]))
+)
+
